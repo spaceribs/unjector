@@ -76,9 +76,9 @@
      */
     var defaults = {
         text: 'This website has detected that your ISP has notified you about an issue with ' +
-        'your account by snooping on your traffic and injecting it\'s own content into your ' +
-        'private browsing experience. It\'s also possible that they are accusing you of hitting ' +
-        'your data cap or have outdated hardware (although still compatible). If this ' +
+        'your account by snooping on your traffic and injecting its own content into your ' +
+        'private browsing experience. They may be accusing you of hitting ' +
+        'your data cap or using outdated hardware (although obviously still compatible). If this ' +
         'is the case, you should consider filing a complaint with the FCC as these actions ' +
         'are highly monopolistic and possibly legally questionable:',
         buttons: [{
