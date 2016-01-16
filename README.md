@@ -11,6 +11,14 @@ to fight back for the visitors of your website?
 
 This package requires no additional dependencies and the minified version comes in at 2 kilobytes.
 
+By default it will turn these comcast popups:
+
+![Comcast Popup](http://i.imgur.com/1zBuhFp.png)
+
+into these specially injected popups:
+
+![Injected Popup](http://i.imgur.com/P9ac1OS.png)
+
 # Install
 
 1. Install this package with Bower: `bower install unjector`
@@ -22,4 +30,4 @@ This package requires no additional dependencies and the minified version comes 
 
 # Configuration
 
-Coming Soon!
+More features are on the way.
