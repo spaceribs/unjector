@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+
+        <script id='unjector' data-options='{"test": true}' src="../dist/unjector.min.js"></script>
+    </head>
+    <body>
+        <h1>This is your website</h1>
+        <script language="JavaScript" type="text/javascript">
+
+            // Copyright (C) 2013 Comcast Cable Communications, LLC
+            // Intended use of this message is to display critical and time sensitive notifications to customers.
+            /*
+             This program is free software; you can redistribute it and/or
+             modify it under the terms of the GNU General Public License
+             as published by the Free Software Foundation; either version 2
+             of the License, or (at your option) any later version.
+
+             This program is distributed in the hope that it will be useful,
+             but WITHOUT ANY WARRANTY; without even the implied warranty of
+             MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+             GNU General Public License for more details.
+
+             You should have received a copy of the GNU General Public License
+             along with this program; if not, write to the Free Software
+             Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+             */
+
+
+            var _ComcastAlert = (function(){
+                return {
+                    SYS_URL: '/e8f6b078-0f35-11de-85c5-efc5ef23aa1f/aupm/notify.do'
+                    , dragObj: {zIndex: 9999}
+                    , browser: null
+                    , comcastCheck: 1
+                    , comcastTimer: null
+                    , xmlhttp: null
+
+                    , go: function(){
+                        if(self.location !== top.location) return;
+                        if(document.body){
+                            _ComcastAlert.usageAlertPreThreshold();
+                            _ComcastAlert.browser = _ComcastAlert.checkBrowser();
+                            _ComcastAlert.getXmlhttp();
+                            _ComcastAlert.checkBulletin();
+                            return _ComcastAlert;
+                        }else{
+                            setTimeout(_ComcastAlert.go, 200);
+                        }
+                    }
+
+                    , usageAlertPreThreshold: function(){
+
+                        var image_url = 'http://servicealerts.comcast.net:8080/images/ubb/';
+                        var usageAlertAnalytics = 'ubb_90%.png';
+                        var faq_url = 'http://customer.comcast.com/help-and-support/internet/data-usage-plans-expansion';
+                        var privacy_url = 'http://xfinity.comcast.net/privacy/';
+                        var notice_width = '600px';
+                        var notice_height = '275px';
+                        var winObj = {
+                            image_url: image_url
+                            , usageAlertAnalytics: usageAlertAnalytics
+                            , faq_url: faq_url
+                            , privacy_url: 	privacy_url
+                            , notice_width: notice_width
+                            , notice_height: notice_height
+                            , headertext1: '<strong>Dear Xfinity Customer,</strong>'
+                            , textline1: 'You have reached <b>90%</b> of your <b>300</b> <b>GB</b> monthly data plan for your XFINITY Internet Service. As of <b>06-14-2015</b>, you have <b>27</b> <b>GB</b> remaining for this calendar month.'
+                            , faqtext:  'To learn more about this message click the FAQs link below. '
+                        };
+                        this.createWindow(winObj);
+                    }
+
+                    , createWindow: function(winObj){
+                        var html = '<style type="text/css">';
+                        html += '#comcast_content {width: ' + winObj.notice_width + '; height:' + winObj.notice_height + '; border: 1px solid #454545; background-color:#FFFFFF; position:absolute; top:100px; left:100px; zoom:1; z-index: 9999999; opacity:0.99; filter:alpha(opacity=99);}';
+                        html += '#comcast_content .header {height: 40px; background-color:#232323; repeat-x;}';
+                        html += '#comcast_content .logo {float:left; position:absolute; top:6px; left:10px;}';
+                        html += '#comcast_content .closebn {float:right; position:absolute; right:5px; top:2px;}';
+                        html += '#comcast_content .content-wrapper {padding-left: 18px; padding-right: 15px; padding-bottom: 12px;}';
+                        html += '#comcast_content .headerimage { margin-top: 15px;}';
+                        html += '#comcast_content .header1 {margin: 10px 0 0 0; padding-top: 10px; color: #000000; font: 20px/22px bold Arial, Helvetica, sans-serif;}';
+                        html += '#comcast_content .textcontent {margin: 10px 0 0 0; text-align: left; color: #303030; word-spacing: 0px; font: 16px/17px Arial, Helvetica, sans-serif; line-height: 1.25;}';
+                        html += '#comcast_content .faqtextcontent {float:left; position:absolute; bottom:35px; left:20px; margin: 12px 0 0 0; color: #000000; text-align:justify; text-justify:inter-word; word-spacing: 0px; font: 13px/14px Arial, Helvetica, Arial, sans-serif; line-height: 1.00;}';
+                        html += '#comcast_content .acknowledgebutton {float:left; position:absolute; bottom:75px; left: 210px;}';
+                        html += '#comcast_content .comcastlogo {float:right; position:absolute; bottom:5px; right:5px; margin: 12px 0 0 0;}';
+                        html += '#comcast_content .privacystatement {float:left; position:absolute; bottom:10px; left:20px; margin: 12px 0 0 0; font: 13px/14px sans-serif; text-align: bottom;}';
+                        html += '#comcast_content .usagemeter {float:left; position:absolute; bottom:10px; left:225px; margin: 12px 0 0 0; font: 13px/14px sans-serif; text-align: bottom;}';
+                        html += '#comcast_content .footerbreak1 {float:left; position:absolute; bottom:7px; left:165px;}';
+                        html += '#comcast_content .footerbreak2 {float:left; position:absolute; bottom:7px; left:216px;}';
+                        html += '#comcast_content .privacystatement {float:left; position:absolute; bottom:10px; left:20px; margin: 12px 0 0 0; font: 13px/14px sans-serif; text-align: bottom;}';
+                        html += '#comcast_content .privacystatement:link {color:#404040; text-decoration:none;}';
+                        html += '#comcast_content .privacystatement:visited {color:#404040; text-decoration:none;}';
+                        html += '#comcast_content .privacystatement:hover {color:#1482dc; text-decoration:underline;}';
+                        html += '#comcast_content .faqs {float:left; position:absolute; bottom:10px; left:175px; margin: 12px 0 0 0; font: 13px/14px sans-serif; text-align: bottom;}';
+                        html += '#comcast_content .faqs:link {color:#404040; text-decoration:none;}';
+                        html += '#comcast_content .faqs:visited {color:#404040; text-decoration:none;}';
+                        html += '#comcast_content .faqs:hover {color:#1482dc; text-decoration:underline;}';
+                        html += '#comcast_content .usagemeter {float:left; position:absolute; bottom:10px; left:228px; margin: 12px 0 0 0; font: 13px/14px sans-serif; text-align: bottom;}';
+                        html += '#comcast_content .usagemeter:link {color:#404040; text-decoration:none;}';
+                        html += '#comcast_content .usagemeter:visited {color:#404040; text-decoration:none;}';
+                        html += '#comcast_content .usagemeter:hover {color:#1482dc; text-decoration:underline;}';
+                        html += '#comcast_content .comcast-wrapper {float:right; position:absolute; bottom:5px; right:10px; padding-top:0px; text-align: right;}';
+                        html += '</style>';
+                        html += '<div class="main-wrapper" id="comcast_content">';
+                        html += '<div class="header" onmousedown="javascript:_ComcastAlert.dragStart(event,\'comcast_content\')">';
+                        html += '<img src="' + winObj.image_url + 'xfinity-logo-1.png" height="28" width="87" alt="Xfinity" class="logo" />';
+                        html += '<a href=\"#\" onClick=\"javascript:_ComcastAlert.close_comcast_alert()\"><img src="' + winObj.image_url + 'close-button-xgrey.png" height="32" width="32" alt="Xfinity" class="closebn"/></a>';
+                        html += '<a href=\"#\" onClick=\"javascript:_ComcastAlert.close_comcast_alert()\"><img src="' + winObj.image_url + 'click-to-close-blue.png" height="30" width="175" alt="Xfinity" class="acknowledgebutton"/></a>'
+                        html += '<a href="' + winObj.privacy_url + '" target="_new" class="privacystatement">PRIVACY STATEMENT</a></a>';
+                        html += '<a href="' + winObj.faq_url + '" target="_new" class="faqs">FAQs</a>';
+                        html += '<a href=\"#\" onClick="document.location.href=\'' + this.SYS_URL + '?dispatch=redirect&redirectName=login&paramName=bmUid\'" class="usagemeter">USAGE METER</a>';
+                        html += '<img src="' + winObj.image_url + 'footerbreak.gif" height="22" class="footerbreak1" />';
+                        html += '<img src="' + winObj.image_url + 'footerbreak.gif" height="22" class="footerbreak2" />';
+                        html += '</div>';
+                        html += '<div class="content-wrapper">';
+                        html += '<p class="header1">';
+                        html += winObj.headertext1;
+                        html += '</p>';
+                        html += '<p class="textcontent">';
+                        html += winObj.textline1;
+                        html += '</p>';
+                        html += '<p class="faqtextcontent">';
+                        html += winObj.faqtext;
+                        html += '</p>';
+                        html += '<div class="comcastlogo">';
+                        html += '<img src="' + winObj.image_url + 'comcast-logo.png" height="50" width="115" alt="Message by Comcast"/>';
+                        html += '</div>';
+                        // html += '<img src="' + winObj.image_url + encodeURIComponent(winObj.usageAlertAnalytics) + '?' + _ComcastAlert.comcastContentnoCache() + '"  width="1" height="1">';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '</div>';
+                        document.body.innerHTML = document.body.innerHTML + html;
+                    }
+
+                    // Function to Determine browser and version. Copyright 2001 by Mike Hall.
+
+                    , checkBrowser: function() {
+                        var ua, s, i;
+                        var browser = {
+                            isIE: false
+                            , isNS: false
+                            , version: null
+                        };
+                        ua = navigator.userAgent;
+                        s = "MSIE";
+                        if ((i = ua.indexOf(s)) >= 1) {
+                            browser.isIE = true; browser.version = parseFloat(ua.substr(i + s.length));
+                        }
+                        s = "Netscape6/";
+                        if ((i = ua.indexOf(s)) >= 0) {
+                            browser.isNS = true; browser.version = parseFloat(ua.substr(i + s.length));
+                        }
+                        s = "Gecko";
+                        if ((i = ua.indexOf(s)) >= 0) {
+                            browser.isNS = true; browser.version = 6.1;
+                        }
+                        return browser;
+                    }
+
+                    , dragStart: function(event, id) {
+                        var browser1 = _ComcastAlert.browser;
+                        var dragObj = _ComcastAlert.dragObj;
+                        var el;
+                        var x, y;
+                        if (id) dragObj.elNode = document.getElementById(id);
+                        else {
+                            if (browser1.isIE) dragObj.elNode = window.event.srcElement;
+                            if (browser1.isNS) dragObj.elNode = event.target;
+                            if (dragObj.elNode.nodeType == 3) dragObj.elNode = dragObj.elNode.parentNode;
+                        }
+                        if (browser1.isIE) {
+                            x = window.event.clientX + document.documentElement.scrollLeft + document.body.scrollLeft;
+                            y = window.event.clientY + document.documentElement.scrollTop + document.body.scrollTop;
+                        }
+                        if (browser1.isNS) {
+                            x = event.clientX + window.scrollX;
+                            y = event.clientY + window.scrollY;
+                        }
+                        dragObj.cursorStartX = x;
+                        dragObj.cursorStartY = y;
+                        dragObj.elStartLeft = parseInt(dragObj.elNode.style.left, 10);
+                        dragObj.elStartTop  = parseInt(dragObj.elNode.style.top, 10);
+                        if (isNaN(dragObj.elStartLeft)) dragObj.elStartLeft = 100;
+                        if (isNaN(dragObj.elStartTop)) dragObj.elStartTop = 50;
+                        if (browser1.isIE) {
+                            document.attachEvent("onmousemove", _ComcastAlert.dragGo);
+                            document.attachEvent("onmouseup",  _ComcastAlert.dragStop);
+                            window.event.cancelBubble = true;
+                            window.event.returnValue = false; }
+                        if (browser1.isNS) {
+                            document.addEventListener("mousemove", _ComcastAlert.dragGo,  true);
+                            document.addEventListener("mouseup",  _ComcastAlert.dragStop, true);
+                            event.preventDefault();
+                        }
+                    }
+
+                    // End Function
+
+
+                    , comcastContentnoCache: function() {
+                        return Math.round(Math.random() * 103050709);
+                    }
+
+                    , dragGo: function(event) {
+                        var browser1 = _ComcastAlert.browser;
+                        var dragObj = _ComcastAlert.dragObj;
+                        var x, y;
+                        if (browser1.isIE) {
+                            x = window.event.clientX + document.documentElement.scrollLeft + document.body.scrollLeft;
+                            y = window.event.clientY + document.documentElement.scrollTop + document.body.scrollTop;
+                        }
+                        if (browser1.isNS) {
+                            x = event.clientX + window.scrollX; y = event.clientY + window.scrollY;
+                        }
+                        dragObj.elNode.style.left = (dragObj.elStartLeft + x - dragObj.cursorStartX) + "px";
+                        dragObj.elNode.style.top = (dragObj.elStartTop + y - dragObj.cursorStartY) + "px";
+                        if (browser1.isIE) { window.event.cancelBubble = true; window.event.returnValue = false; }
+                        if (browser1.isNS) event.preventDefault();
+                    }
+
+                    , dragStop: function(event) {
+                        var browser1 = _ComcastAlert.browser;
+                        if (browser1.isIE) {
+                            document.detachEvent("onmousemove", _ComcastAlert.dragGo);
+                            document.detachEvent("onmouseup",  _ComcastAlert.dragStop);
+                        }
+                        if (browser1.isNS) {
+                            document.removeEventListener("mousemove", _ComcastAlert.dragGo,  true);
+                            document.removeEventListener("mouseup",  _ComcastAlert.dragStop, true);
+                        }
+                    }
+
+                    , getXmlhttp: function(){
+                        var xmlhttp=false; /*@cc_on @*/ /*@if (@_jscript_version >= 5) try { xmlhttp = new ActiveXObject("Msxml2.XMLHTTP"); } catch (e) { try {  xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); } catch (E) {  xmlhttp = false; } } @end @*/
+                        if (!xmlhttp && typeof XMLHttpRequest!='undefined') {
+                            try {
+                                xmlhttp = new XMLHttpRequest();
+                            } catch (e) {
+                                xmlhttp=false;
+                            }
+                        }
+                        if (!xmlhttp && window.createRequest) {
+                            try {
+                                xmlhttp = window.createRequest();
+                            } catch (e) {
+                                xmlhttp=false;
+                            }
+                        }
+                        this.xmlhttp = xmlhttp;
+                    }
+
+                    , checkBulletin: function(){
+                        if(_ComcastAlert.comcastCheck==0) { return; }
+                        var xmlhttp = _ComcastAlert.xmlhttp;
+                        xmlhttp.open("GET", _ComcastAlert.SYS_URL+'?dispatch=checkBulletin',true);
+                        xmlhttp.onreadystatechange = function() {
+                            if (xmlhttp.readyState == 4) {
+        //                        if(xmlhttp.responseText.indexOf('43a1028c-7d11-11de-b687-1f15c5ad6a13') == -1){
+        //                            document.getElementById('comcast_content').style.display="none";
+        //                            _ComcastAlert.comcastCheck = 0;
+        //                        }
+                                _ComcastAlert.comcastTimer = setTimeout("_ComcastAlert.checkBulletin()",5000);
+                            };
+                        };
+                        xmlhttp.send(null);
+                    }
+
+                    , close_comcast_alert: function() {
+                        document.getElementById('comcast_content').style.display = "none";
+                        _ComcastAlert.sendAck();
+                    }
+
+
+                    , acknowledge: function() {
+                        _ComcastAlert.sendAck();
+                        document.getElementById('comcast_content').style.display = "none";
+                    }
+                    , sendAck: function(){
+                        var xmlhttp = _ComcastAlert.xmlhttp;
+                        xmlhttp.open("GET", _ComcastAlert.SYS_URL+'?dispatch=ackBulletin',true);
+                        xmlhttp.send(null)
+                    }
+                }
+            }());
+
+            _ComcastAlert.go();
+        </script>
+    </body>
+</html>

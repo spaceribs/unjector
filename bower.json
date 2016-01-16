@@ -1,0 +1,23 @@
+{
+  "name": "unjector",
+  "description": "An injector for Comcast's injector.",
+  "main": "dist/unjector.js",
+  "authors": [
+    "Spaceribs <spaceribs@gmail.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "comcast",
+    "injector",
+    "browser"
+  ],
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
