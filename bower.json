@@ -1,6 +1,7 @@
 {
   "name": "unjector",
-  "description": "An injector for Comcast's injector.",
+  "version": "0.0.2",
+  "description": "An injector for ISP injectors.",
   "main": "dist/unjector.js",
   "authors": [
     "Spaceribs <spaceribs@gmail.com>"

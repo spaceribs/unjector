@@ -1,7 +1,7 @@
 {
   "name": "unjector",
-  "version": "0.0.1",
-  "description": "An injector for Comcast's injector.",
+  "version": "0.0.2",
+  "description": "An injector for ISP injectors.",
   "main": "src/unjector.js",
   "directories": {
     "example": "example",
@@ -19,7 +19,10 @@
   "license": "MIT",
   "devDependencies": {
     "gulp": "^3.9.0",
+    "gulp-bump": "^1.0.0",
+    "gulp-filter": "^3.0.1",
     "gulp-rename": "^1.2.2",
+    "gulp-tag-version": "^1.3.0",
     "gulp-uglify": "^1.5.1"
   }
 }
