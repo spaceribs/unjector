@@ -76,13 +76,12 @@
      */
     var defaults = {
         text: 'Your Internet Service Provider (ISP) Comcast, has tracked your web surfing ' +
-        'and injected it\'s own content into your private browsing. They may be accusing ' +
+        'and injected its own content into your private browsing. They may be accusing ' +
         'you of hitting your data cap or having outdated hardware. If this is the case, ' +
         'you should consider filing a complaint with the Federal Communications Commission ' +
-        '(FCC) as these actions are monopolistic and possibly illegal. Click here to file ' +
-        'a complaint with the FCC:',
+        '(FCC) as these actions are monopolistic and possibly illegal.',
         buttons: [{
-            text: 'Contact the FCC »',
+            text: 'Click here to file a complaint with the FCC »',
             href: 'https://consumercomplaints.fcc.gov/hc/en-us/categories/200134970-Internet'
         }]
     };
