@@ -9,7 +9,7 @@ could include:
 It's appalling that Comcast is analyzing and injecting content into your webpage, if only there was a way
 to fight back for the visitors of your website?
 
-This package requires no additional dependencies and the minified version comes in at 2 kilobytes.
+This package requires no additional dependencies and the minified version comes in at 2 kilobytes. Unlike Comcasts' injection, it does not pollute the global scope or cascade CSS modifications into your website. It is made to be as unobtrusive as possible.
 
 By default it will turn these comcast popups:
 
@@ -25,7 +25,7 @@ into these specially injected popups:
 2. Add this script tag to your `head`:
 
 ```html
-<script id='unjector' data-options='{"test": true}' src="../dist/unjector.min.js"></script>
+<script id='unjector' data-options='{}' src="../dist/unjector.min.js"></script>
 ```
 
 # Configuration
