@@ -1,6 +1,6 @@
 {
   "name": "unjector",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "An injector for ISP injectors.",
   "main": "src/unjector.js",
   "directories": {
