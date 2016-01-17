@@ -75,12 +75,12 @@
      * Default Settings
      */
     var defaults = {
-        text: 'This website has detected that your ISP has notified you about an issue with ' +
-        'your account by snooping on your traffic and injecting its own content into your ' +
-        'private browsing experience. They may be accusing you of hitting ' +
-        'your data cap or using outdated hardware (although obviously still compatible). If this ' +
-        'is the case, you should consider filing a complaint with the FCC as these actions ' +
-        'are highly monopolistic and possibly legally questionable:',
+        text: 'Your Internet Service Provider (ISP) Comcast, has tracked your web surfing ' +
+        'and injected it\'s own content into your private browsing. They may be accusing ' +
+        'you of hitting your data cap or having outdated hardware. If this is the case, ' +
+        'you should consider filing a complaint with the Federal Communications Commission ' +
+        '(FCC) as these actions are monopolistic and possibly illegal. Click here to file ' +
+        'a complaint with the FCC:',
         buttons: [{
             text: 'Contact the FCC »',
             href: 'https://consumercomplaints.fcc.gov/hc/en-us/categories/200134970-Internet'
@@ -146,6 +146,7 @@
             var buttonElement = document.createElement("a");
             buttonElement.textContent = text;
             buttonElement.setAttribute('href', href);
+            buttonElement.setAttribute('target', '_blank');
 
             return buttonElement;
         }
@@ -185,7 +186,7 @@
             if (typeof console === 'undefined') {
                 return;
             }
-            console.warn('Unjector: It looks like Comcast is injecting some code into the page!');
+            console.warn('Unjector: It looks like Comcast has injected some code into the page!');
             addNote();
             restylePopup(popupElement);
         }
