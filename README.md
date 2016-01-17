@@ -17,7 +17,7 @@ By default it will turn these comcast popups:
 
 into these specially injected popups:
 
-![Injected Popup](http://i.imgur.com/P9ac1OS.png)
+![Injected Popup](http://i.imgur.com/OiYBpVp.png)
 
 # Install
 
